@@ -13,7 +13,7 @@ const app = express();
 webpush.setVapidDetails(
     `mailto:erwor@erwor.me`,
     `BB6EXEBNhCcykz3CeI7afdxwzstx1tFWrk4hXLWSf4Ma5hZUOB0wUEtkgLw3uLrReW1rsW0vEhKoNYghFHx_-Ko`,
-    fs.readFileSync(path.join(__dirname, 'keys/vapid-private.key')).toString(),
+    fs.readFileSync(path.join(__dirname, '../keys/vapid-private.key')).toString(),
 );
 
 app.use(bodyParser.json());
@@ -23,7 +23,7 @@ if (process.env.NODE_ENV == 'DEV') {
 }
 
 app.use('/api', apiRouter)
-app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.static(path.join(__dirname, '../public')))
 
 app.listen(process.env.PORT || port, () => {
     console.log(`Listening on port: ${port}`)

@@ -4,6 +4,7 @@ import { Devices } from "./devices";
 import { PushSubscription } from 'web-push';
 import { ErrorRes } from "./types/error-response";
 import { RelayNotificationRes } from "./types/relay-notification-response";
+import { Notification } from "./types/notification";
 
 const router = Router();
 
@@ -17,6 +18,7 @@ router.post<void, ErrorRes, PushSubscription>('/register-subscription', async (r
         res.status(400).json({
             error: `Invalid Push Subscription`
         })
+        return;
     }
     await Devices.add({
         ...req.body,
@@ -26,17 +28,23 @@ router.post<void, ErrorRes, PushSubscription>('/register-subscription', async (r
 })
 
 router.post<
-    void, RelayNotificationRes[] | ErrorRes, { notification: string }
+    void, RelayNotificationRes[] | ErrorRes, Notification
 >('/relay-notification', async (req, res) => {
-    if (!req.body?.notification) { 
+    const missing = [
+        !req.body?.title,
+        !req.body?.body,
+        !req.body?.url,
+    ]
+    if (missing.some(Boolean)) { 
         res.status(400).json({
-            error: "Empty Notification Content"
+            error: "Invalid Notification Content"
         });
+        return;
     }
     const devices = await Devices.getAll();
     const results = [...devices.values()].map(device => {
         try {
-            webpush.sendNotification(device, req.body.notification);
+            webpush.sendNotification(device, JSON.stringify(req.body));
             return { userAgent: device.userAgent, success: true }
         } catch (e: any) {
             return { userAgent: device.userAgent, success: false, error: e.message }

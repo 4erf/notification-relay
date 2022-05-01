@@ -107,8 +107,8 @@ dist
 src/devices.json
 
 # Private keys
-src/keys/*
-!src/keys/.gitkeep
+keys/*
+!keys/.gitkeep
 
 # vscode
 .vscode

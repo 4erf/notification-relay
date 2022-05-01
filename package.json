@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "watch": "cross-env NODE_ENV=DEV nodemon src/main.ts",
-    "build": "tsc --build --clean",
+    "build": "tsc --build --clean && tsc --build",
     "debug": "cross-env NODE_ENV=DEV nodemon --exec 'node --inspect=0.0.0.0:9229 --require ts-node/register src/main.ts'"
   },
   "repository": {
