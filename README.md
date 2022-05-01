@@ -1,4 +1,4 @@
-# notification-relay
+# Notification Relay
 Allows you to send notifications from your web server or from other devices to all subscribed devices.
 
 The app listens for messages from other apps that it will then relay to your devices. 
