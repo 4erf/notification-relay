@@ -1,11 +1,11 @@
 let worker;
 
-const apiUrl = new URL('api/endpoint', window.location.origin);
+const apiUrl = new URL(window.location.pathname + 'api/endpoint', window.location.origin);
 
 (async function main() {
     if ('serviceWorker' in navigator) {
         try {
-            await navigator.serviceWorker.register('/worker.js').then(registration => {
+            await navigator.serviceWorker.register('./worker.js').then(registration => {
                 worker = registration;
             });
         } catch (e) {
@@ -28,9 +28,8 @@ async function subscribe() {
     } catch (e) {
         console.error(e)
         alert('Cannot subscribe: ', e.message)
+	return;
     }
-
-    console.log(subscription)
 
     try {
         await fetch(new URL('register-subscription', apiUrl), {
