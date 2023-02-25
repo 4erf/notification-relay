@@ -17,6 +17,7 @@ webpush.setVapidDetails(
 );
 
 app.use(bodyParser.json());
+app.set('trust proxy', true);
 
 if (process.env.NODE_ENV == 'DEV') {
     app.use(morgan('dev'))

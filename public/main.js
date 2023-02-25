@@ -28,9 +28,10 @@ async function subscribe() {
     } catch (e) {
         console.error(e)
         alert('Cannot subscribe: ', e.message)
-	return;
+        return;
     }
 
+    const topic = document.getElementById('topic').value
     try {
         await fetch(new URL('register-subscription', apiUrl), {
             method: 'POST',
@@ -38,7 +39,7 @@ async function subscribe() {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(subscription),
+            body: JSON.stringify({ ...subscription, topic }),
         })
     } catch (e) {
         console.error(e)

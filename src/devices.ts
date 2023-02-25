@@ -20,6 +20,10 @@ export class Devices {
         return new Map(devices.map(d => [d.endpoint, d]));
     }
 
+    public static async getByTopic(topic: string): Promise<Device[]> {
+        return [...(await this.getAll()).values()].filter(device => device.topic === topic)
+    }
+
     private static async save(devices: Map<string, Device>): Promise<void> {
         await fs.writeFile(filePath, JSON.stringify([...devices.values()]));
     }
