@@ -41,6 +41,7 @@ async function subscribe() {
             },
             body: JSON.stringify({ ...subscription.toJSON(), topic }),
         })
+        alert('Successfully subscribed')
     } catch (e) {
         console.error(e)
         alert('Error registering subscription with Server: ', e.message)
